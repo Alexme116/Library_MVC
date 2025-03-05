@@ -1,11 +1,17 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import LandPage from './components/Landpage/Landpage'
+import Login from './components/Auth/Login'
+import Register from './components/Auth/Register'
+import UserLandPage from './components/Landpage/UserLandpage'
+import AdminLandPage from './components/Landpage/AdminLandpage'
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandPage/>} />
+      <Route path="/" element={<Login/>} />
+      <Route path="/register" element={<Register/>} />
+      <Route path="/userlandpage" element={<UserLandPage/>} />
+      <Route path="/adminlandpage" element={<AdminLandPage/>} />
     </Routes>
   )
 }
