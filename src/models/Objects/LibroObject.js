@@ -1,4 +1,4 @@
-export class Libro {
+export class LibroObject {
     constructor(titulo, autor, genero) {
         this.id = 0
         this.titulo = titulo

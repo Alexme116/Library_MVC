@@ -1,10 +1,20 @@
-export default function AdminLandPage() {
+/* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom"
+
+export default function AdminLandPage({ firebaseDao }) {
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        await firebaseDao.signOut()
+        navigate('/')
+    }
+
     return (
         <div className="h-svh w-svw">
             {/* Logout Button */}
-            <div className="absolute top-10 right-10 border-2 rounded-full px-3 pt-1 pb-2 bg-black">
+            <button onClick={handleLogout} className="absolute top-10 right-10 border-2 rounded-full px-3 pt-1 pb-2 bg-black">
                 <h1 className=" text-white">Logout</h1>
-            </div>
+            </button>
 
             {/* Form */}
             <div className="flex h-full flex-col justify-center items-center gap-5">
