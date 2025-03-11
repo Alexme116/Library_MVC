@@ -28,6 +28,12 @@ export default function Login({ firebaseDao }) {
         }
     }
 
+    const handleEnter = (e) => {
+        if (e.key === 'Enter') {
+            handleLogin()
+        }
+    }
+
     useEffect(() => {
         if (firebaseDao.getUser() != null) {
             handleNavigate('/adminlandpage')
@@ -40,7 +46,7 @@ export default function Login({ firebaseDao }) {
                 <div className="flex flex-col items-center gap-5">
                     <h1 className="text-2xl font-bold">Iniciar sesion</h1>
                     <input type="text" placeholder="Email" className="border-2 rounded-md px-3" value={email} onChange={(e) => {setEmail(e.target.value)}} />
-                    <input type="password" placeholder="Contra" className="border-2 rounded-md px-3" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                    <input type="password" placeholder="Contra" className="border-2 rounded-md px-3" value={password} onKeyDown={handleEnter} onChange={(e) => {setPassword(e.target.value)}} />
                     <button onClick={handleLogin} className="w-full border-2 rounded-2xl pb-1 bg-black text-white">Enviar</button>
                     <button onClick={() => {handleNavigate('/register')}} className="underline">No tengo cuenta</button>
                 </div>
