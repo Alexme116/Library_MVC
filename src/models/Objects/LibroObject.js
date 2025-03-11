@@ -48,12 +48,4 @@ export class LibroObject {
         }
         this.id = id
     }
-
-    setEstado(estado) {
-        if (estado){
-            this.estado = 'disponible'
-        } else {
-            this.estado = 'prestado'
-        }
-    }
 }

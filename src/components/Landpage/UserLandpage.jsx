@@ -25,7 +25,6 @@ export default function AdminLandPage({ firebaseDao }) {
         setGenero('')
     }
 
-
     const findBook = () => {
         if (titulo.trim() === '' && autor.trim() === '' && genero.trim() === '') {
             setToggleLibros(!toggleLibros)
@@ -40,6 +39,26 @@ export default function AdminLandPage({ firebaseDao }) {
             setMostrarLibros(books)
         }
         clearInputs()
+    }
+
+    const handleBorrowBook = async (index) => {
+        let libro = mostrarLibros[index]
+        if(libro.estado === 'prestado'){
+            libro.estado = 'disponible'
+        } else {
+            libro.estado = 'prestado'
+        }
+        try {
+            await firebaseDao.updateLibro(libro)
+            if(libro.estado === 'prestado'){
+                alert('Libro prestado')
+            } else {
+                alert('Libro regresado')
+            }
+            setToggleLibros(!toggleLibros)
+        } catch (error) {
+            alert(`Error prestando libro: ${error}`)
+        }
     }
 
     useEffect(() => {
@@ -105,11 +124,11 @@ export default function AdminLandPage({ firebaseDao }) {
                                         <h1>{libro.titulo}</h1>
                                         <h1 className="border-black border-l-2 border-r-2">{libro.autor}</h1>
                                         <h1 className="border-black border-r-2">{libro.genero}</h1>
-                                        <h1>{libro.estado}</h1>
+                                        <h1 className={`${libro.estado == "disponible" ? 'text-green-700' : 'text-red-700'}`}>{libro.estado}</h1>
                                     </div>
                                     <div className="w-[5%] border-b-2 border-r-2 border-black">
-                                        <button className="w-full text-center">
-                                            <h1>Tomar</h1>
+                                        <button onClick={()=>{handleBorrowBook(index)}} className="w-full text-center">
+                                            <h1>{libro.estado == 'disponible' ? 'Tomar' : 'Regresar'}</h1>
                                         </button>
                                     </div>
                                 </div>

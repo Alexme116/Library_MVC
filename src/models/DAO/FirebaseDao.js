@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc } from "firebase/firestore";
 import { app, db, auth } from "./FirebaseConfiguration";
 
 export class FirebaseDao {
@@ -59,4 +59,12 @@ export class FirebaseDao {
         return isAdmin;
     }
 
+    async updateLibro(libro) {
+        const querySnapshot = await getDocs(collection(db, "libros"));
+        querySnapshot.forEach(async (doc) => {
+            if (doc.data().id === libro.id) {
+                await updateDoc(doc.ref, libro);
+            }
+        })
+    }
 }

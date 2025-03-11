@@ -47,7 +47,7 @@ export default function AdminLandPage({ firebaseDao }) {
             setToggleLibros(!toggleLibros)
             return
         }
-        
+
         let libro = new LibroObject(titulo, autor, genero)
         const books = searchBook(libros, libro)
         if(books == []){
@@ -124,7 +124,7 @@ export default function AdminLandPage({ firebaseDao }) {
                                         <h1>{libro.titulo}</h1>
                                         <h1 className="border-black border-l-2 border-r-2">{libro.autor}</h1>
                                         <h1 className="border-black border-r-2">{libro.genero}</h1>
-                                        <h1>{libro.estado}</h1>
+                                        <h1 className={`${libro.estado == "disponible" ? 'text-green-700' : 'text-red-700'}`}>{libro.estado}</h1>
                                     </div>
                                     <div className="w-[5%] border-b-2 border-r-2 border-black">
                                         <button className="w-full text-center">
