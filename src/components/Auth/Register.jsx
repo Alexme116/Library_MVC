@@ -17,9 +17,8 @@ export default function Register({ firebaseDao }) {
             alert('Las contraseñas no coinciden')
         } else {
             await firebaseDao.createUser(email, password)
-            console.log(firebaseDao.getUser())
             if (firebaseDao.getUser() != null) {
-                handleNavigate('/adminlandpage')
+                handleNavigate('/userlandpage')
             }
         }
     }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
@@ -17,11 +18,9 @@ export default function Login({ firebaseDao }) {
         } catch (error) {
             alert(`Error: ${error}`)
         }
-        console.log(firebaseDao.getUser())
         if (firebaseDao.getUser() != null) {
-            console.log(firebaseDao.getUser())
-            const userType = 'admin'
-            if (userType === 'admin') {
+            let isAdmin = await firebaseDao.isAdmin(firebaseDao.getUser().email)
+            if (isAdmin) {
                 handleNavigate('/adminlandpage')
             } else {
                 handleNavigate('/userlandpage')

@@ -1,6 +1,5 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
 import { FirebaseDao } from './models/DAO/FirebaseDao'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'

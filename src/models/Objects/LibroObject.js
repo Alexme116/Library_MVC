@@ -27,7 +27,25 @@ export class LibroObject {
         return this.estado
     }
 
-    setId(id) {
+    getLibro() {
+        this.setId()
+        return {
+            id: this.id,
+            titulo: this.titulo,
+            autor: this.autor,
+            genero: this.genero,
+            estado: this.estado
+        }
+    }
+
+    setId() {
+        let id = 0
+        for (let i = 0; i < this.titulo.length; i++) {
+            id += this.titulo.charCodeAt(i)
+        }
+        for (let i = 0; i < this.autor.length; i++) {
+            id += this.autor.charCodeAt(i)
+        }
         this.id = id
     }
 

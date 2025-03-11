@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { app, db, auth } from "./FirebaseConfiguration";
 
 export class FirebaseDao {
@@ -30,4 +30,33 @@ export class FirebaseDao {
             console.log(error);
         }
     }
+
+    async getLibros() {
+        const libros = [];
+        const querySnapshot = await getDocs(collection(db, "libros"));
+        querySnapshot.forEach((doc) => {
+            libros.push(doc.data());
+        })
+        return libros;
+    }
+
+    async addLibro(libro) {
+        try {
+            await addDoc(collection(db, "libros"), libro);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async isAdmin(email) {
+        const querySnapshot = await getDocs(collection(db, "admins"));
+        let isAdmin = false;
+        querySnapshot.forEach((doc) => {
+            if (doc.data().email === email) {
+                isAdmin = true;
+            }
+        })
+        return isAdmin;
+    }
+
 }
