@@ -36,8 +36,7 @@ export default function AdminLandPage({ firebaseDao }) {
             alert('Libro agregado')
             clearInputs()
             setToggleLibros(!toggleLibros)
-        }
-        catch (error) {
+        } catch (error) {
             alert(`Error Agregando Libro: ${error}`)
         }
     }
@@ -57,6 +56,16 @@ export default function AdminLandPage({ firebaseDao }) {
         }
         clearInputs()
     }
+
+    const deleteBook = async (index) => {
+        try {
+            await firebaseDao.removeLibro(mostrarLibros[index]);
+            alert("Libro eliminado");
+            setToggleLibros(!toggleLibros); // Refresh UI
+        } catch (error) {
+            alert("Error eliminando el libro: " + error);
+        }
+    };
 
     useEffect(() => {
         if (firebaseDao.getUser() == null) {
@@ -131,9 +140,9 @@ export default function AdminLandPage({ firebaseDao }) {
                                         <h1 className={`${libro.estado == "disponible" ? 'text-green-700' : 'text-red-700'}`}>{libro.estado}</h1>
                                     </div>
                                     <div className="w-[5%] border-b-2 border-r-2 border-black">
-                                        <button className="w-full text-center">
-                                            <h1>Borrar</h1>
-                                        </button>
+                                    <button onClick={() => deleteBook(index)} className="w-full text-center">
+                                        <h1>Borrar</h1>
+                                    </button>
                                     </div>
                                 </div>
                             )
