@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Register({ firebaseDao }) {
     const [email, setEmail] = useState('')
@@ -13,6 +13,11 @@ export default function Register({ firebaseDao }) {
     }
 
     const handleSignUp = async () => {
+        if (email.trim() === '' || password.trim() === '' || repeatPassword.trim() === '') {
+            alert('No pueden haber campos vacios')
+            return
+        }
+
         if (password != repeatPassword) {
             alert('Las contraseñas no coinciden')
         } else {
@@ -28,6 +33,16 @@ export default function Register({ firebaseDao }) {
             handleSignUp()
         }
     }
+
+    useEffect(() => {
+        if (firebaseDao.getUser() != null) {
+            if (firebaseDao.isAdmin(firebaseDao.getUser().email)) {
+                handleNavigate('/adminlandpage')
+            } else {
+                handleNavigate('/userlandpage')
+            }
+        }
+    }, [])
 
     return (
         <div className="h-svh w-svw">

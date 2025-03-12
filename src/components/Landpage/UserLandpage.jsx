@@ -62,6 +62,10 @@ export default function AdminLandPage({ firebaseDao }) {
     }
 
     useEffect(() => {
+        if (firebaseDao.getUser() == null) {
+            navigate('/')
+        }
+
         const getLibros = async () => {
             const libros = await firebaseDao.getLibros()
             setLibros(libros)

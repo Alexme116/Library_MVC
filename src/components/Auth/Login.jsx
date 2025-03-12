@@ -13,6 +13,11 @@ export default function Login({ firebaseDao }) {
     }
 
     const handleLogin = async () => {
+        if (email.trim() === '' || password.trim() === '') {
+            alert('No pueden haber campos vacios')
+            return
+        }
+
         try {
             await firebaseDao.signIn(email, password)
         } catch (error) {
@@ -36,7 +41,11 @@ export default function Login({ firebaseDao }) {
 
     useEffect(() => {
         if (firebaseDao.getUser() != null) {
-            handleNavigate('/adminlandpage')
+            if (firebaseDao.isAdmin(firebaseDao.getUser().email)) {
+                handleNavigate('/adminlandpage')
+            } else {
+                handleNavigate('/userlandpage')
+            }
         }
     }, [])
 
